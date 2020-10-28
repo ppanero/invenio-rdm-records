@@ -72,3 +72,8 @@ jobs:
       - name: Run tests
         run: |
           ./run-tests.sh --check-pytest
+      - name: Test coverage
+        if: ${{ matrix.python-version == 3.7 && matrix.REQUIREMENTS == 'release' }}
+        uses: tj-actions/coverage-reporter@v3
+        with:
+          coverage-command: 'python -m coverage report'
