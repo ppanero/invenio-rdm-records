@@ -142,7 +142,7 @@ def test_eslistdumper_with_edtfext_parse_error(app, db, minimal_record):
     """Test edft extension implementation."""
     dumper = ElasticsearchDumper(
         extensions=[
-            EDTFListDumperExt("metadata.creators", "name"),
+            EDTFListDumperExt("metadata.creators", "family_name"),
         ]
     )
 
@@ -152,10 +152,10 @@ def test_eslistdumper_with_edtfext_parse_error(app, db, minimal_record):
 
     # Dump it
     dump = record.dumps(dumper=dumper)
-    assert "name_range" not in dump["metadata"]["creators"][0]
-    assert "name" in dump["metadata"]["creators"][0]
+    assert "family_name_range" not in dump["metadata"]["creators"][0]
+    assert "family_name" in dump["metadata"]["creators"][0]
 
     # Load it
     new_record = BibliographicRecord.loads(dump, loader=dumper)
-    assert "name_range" not in new_record["metadata"]["creators"][0]
-    assert "name" in new_record["metadata"]["creators"][0]
+    assert "family_name_range" not in new_record["metadata"]["creators"][0]
+    assert "family_name" in new_record["metadata"]["creators"][0]
